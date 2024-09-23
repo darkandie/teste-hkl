@@ -5,6 +5,7 @@ export interface User {
   email: string;
   telephone: string;
   address: {
+    cep: string;
     street: string;
     city: string;
     number: string;

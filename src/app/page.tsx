@@ -8,14 +8,21 @@ import DataGridDefault from "@/components/DataGrid";
 import ButtonDefault from "@/components/ui/Button";
 import AddIcon from '@mui/icons-material/Add';
 import TextBold from "@/components/ui/TextBold";
+import { useState } from "react";
+import ModalDefault from "@/components/Modal";
+import UserForm from "@/components/Forms/UserForm";
 
 export default function Home() {
-  const api = useApi();
+  const { getAllUser } = useApi();
+  const [open, setOpen] = useState(false)
   
   const {data, isLoading} = useQuery<User[]>({
     queryKey: ["users"],
-    queryFn: api.getAllUser
+    queryFn: getAllUser
   })
+
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   if(isLoading) return <h1>Loading...</h1>;
 
@@ -38,11 +45,17 @@ export default function Home() {
         marginBottom={5}
       >
         <TextBold size={20}>Lista de usuários</TextBold>
-        <ButtonDefault title="Adicionar usuário" endIcon={<AddIcon />}/>
+        <ButtonDefault onClick={handleOpen} title="Adicionar usuário" endIcon={<AddIcon />}/>
       </Box>
       <Box maxWidth={'1200px'} width={"100%"}>
         {data && <DataGridDefault rows={data}/>}
       </Box>
+      <ModalDefault 
+        open={open}
+        onClose={handleClose}
+      >
+        <UserForm />
+      </ModalDefault>
     </Box>
   );
 }
