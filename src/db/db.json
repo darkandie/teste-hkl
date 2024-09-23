@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "name": "Henrique",
+      "cpf": "000.000.000-00",
+      "email": "me@henriqueferreira.dev",
+      "telephone": "(00) 00000-0000"
+    }
+  ]
+}
