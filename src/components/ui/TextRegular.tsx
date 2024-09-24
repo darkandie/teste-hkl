@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 
 interface TextRegularProps {
   children: string;
-  color: string;
-  size: number;
+  color?: string;
+  size?: number;
 }
 
 export default function TextRegular({ children, color, size }: TextRegularProps) {

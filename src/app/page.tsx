@@ -54,7 +54,7 @@ export default function Home() {
         open={open}
         onClose={handleClose}
       >
-        <UserForm />
+        <UserForm closeModal={handleClose} user={null}/>
       </ModalDefault>
     </Box>
   );

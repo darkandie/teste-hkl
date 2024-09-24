@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Henrique",
       "cpf": "000.000.000-00",
       "email": "me@henriqueferreira.dev",
