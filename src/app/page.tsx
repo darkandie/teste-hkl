@@ -11,10 +11,14 @@ import TextBold from "@/components/ui/TextBold";
 import { useState } from "react";
 import ModalDefault from "@/components/Modal";
 import UserForm from "@/components/Forms/UserForm";
+import { useAppContext } from "@/context/AppContext";
+import Loader from "@/components/Loader/Loader";
 
 export default function Home() {
   const { getAllUser } = useApi();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+
+  const { setUser } = useAppContext();
   
   const {data, isLoading} = useQuery<User[]>({
     queryKey: ["users"],
@@ -22,9 +26,12 @@ export default function Home() {
   })
 
   const handleClose = () => setOpen(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setUser(null);
+    setOpen(true);
+  }
 
-  if(isLoading) return <h1>Loading...</h1>;
+  if(isLoading) return <Loader />;
 
   return (
     <Box 
@@ -54,7 +61,7 @@ export default function Home() {
         open={open}
         onClose={handleClose}
       >
-        <UserForm closeModal={handleClose} user={null}/>
+        <UserForm closeModal={handleClose}/>
       </ModalDefault>
     </Box>
   );

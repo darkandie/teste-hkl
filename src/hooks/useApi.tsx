@@ -17,7 +17,8 @@ export const useApi = () => ({
         number: data.address.number,
         cep: data.address.cep,
         city: data.address.city,
-        neighborhood: data.address.neighborhood
+        neighborhood: data.address.neighborhood,
+        state: data.address.state
       }
     })
   },
@@ -32,7 +33,8 @@ export const useApi = () => ({
         number: data.address.number,
         cep: data.address.cep,
         city: data.address.city,
-        neighborhood: data.address.neighborhood
+        neighborhood: data.address.neighborhood,
+        state: data.address.state
       }
     })
   },

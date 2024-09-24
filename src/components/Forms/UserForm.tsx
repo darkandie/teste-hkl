@@ -12,10 +12,10 @@ import InputMask from 'react-input-mask';
 import { useMutation, useQueryClient } from "react-query";
 import { useApi } from "@/hooks/useApi";
 import toast from 'react-hot-toast';
-import { User } from "@/types/user";
 import { useEffect } from "react";
 import { states } from "@/shared/statesList";
 import TextRegular from "../ui/TextRegular";
+import { useAppContext } from "@/context/AppContext";
 
 const userSchema = z.object({
   name: z.string().nonempty("Este campo é obrigatório!"),
@@ -43,14 +43,15 @@ type UserSchema = z.infer<typeof userSchema>;
 
 interface UserFormProps {
   closeModal: () => void;
-  user: User | null;
 }
 
-export default function UserForm({ closeModal, user }: UserFormProps) {
-  const { createNewUser } = useApi();
+export default function UserForm({ closeModal }: UserFormProps) {
+  const { createNewUser, updateUser } = useApi();
   const query = useQueryClient();
 
-  const { setValue, register, handleSubmit, formState: { errors } } = useForm<UserSchema>({
+  const { user } = useAppContext();
+
+  const { setValue, watch, register, handleSubmit, formState: { errors } } = useForm<UserSchema>({
     resolver: zodResolver(userSchema)
   });
 
@@ -69,7 +70,11 @@ export default function UserForm({ closeModal, user }: UserFormProps) {
     }
   }, [])
 
-  const { mutate } = useMutation({
+  const state = watch("address.state");
+
+  console.log(state, 'state alal')
+
+  const { mutate: createMutate } = useMutation({
     //@ts-expect-error @ts-expect-error
     mutationFn: createNewUser,
     onSuccess: () => {
@@ -81,9 +86,26 @@ export default function UserForm({ closeModal, user }: UserFormProps) {
       return toast.error("Erro ao adicionar novo usuário.")
     }
   })
+
+  const { mutate: editMutate } = useMutation({
+    //@ts-expect-error @ts-expect-error
+    mutationFn: updateUser,
+    onSuccess: () => {
+      toast.success("Usuário alterado com sucesso.");
+      query.invalidateQueries(["users"])
+      closeModal();
+    },
+    onError: () => {
+      return toast.error("Erro ao alterar usuário.")
+    }
+  })
   
   const handleSubmitUser = (data: UserSchema) => {
-    mutate(data);
+    if(!user) {
+      createMutate(data);
+    } else {
+      editMutate({...data, id: user.id})
+    }
   }
   
   return(
@@ -219,6 +241,7 @@ export default function UserForm({ closeModal, user }: UserFormProps) {
                 sx={{ height: 40, width: "100%", marginBottom: !errors.address?.state ? 1 : 4  }}
                 placeholder="teste"
                 error={!!errors.address?.state}
+                defaultValue={state}
               >
                 <MenuItem disabled value="">
                   <em>Selecione o estado</em>
@@ -230,7 +253,7 @@ export default function UserForm({ closeModal, user }: UserFormProps) {
             </div>
           </Box>
           <ButtonDefault 
-            title="Cadastrar"
+            title={user ? "Editar" : "Cadastrar"}
             endIcon={<SaveIcon />}
             type="submit"
           />

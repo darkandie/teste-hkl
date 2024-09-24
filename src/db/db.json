@@ -1,17 +1,18 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Henrique",
-      "cpf": "000.000.000-00",
-      "email": "me@henriqueferreira.dev",
-      "telephone": "(00) 00000-0000",
+      "id": "aacb",
+      "name": "Carlos Exemplo",
+      "cpf": "341.371.790-18",
+      "telephone": "(91) 98221-4496",
+      "email": "carlos.oliverhp@gmail.com",
       "address": {
-        "street": "Rua 1",
-        "city": "Castanhal",
+        "street": "Milagre",
         "number": "83",
-        "state": "Pará",
-        "neighborhood": "Estrela"
+        "cep": "68745-425",
+        "city": "CASTANHAL",
+        "neighborhood": "estrela",
+        "state": "PA"
       }
     }
   ]
