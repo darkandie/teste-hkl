@@ -1,7 +1,7 @@
 ## HKL APP
 
 ## Iniciar a aplicação:
-  - Para iniciar a aplicação abre dois terminais, em um digite **yarn backend** e no outro **yarn dev**, e no navegador acesse a endereço http://localhost:3000.
+  - Para iniciar a aplicação abra dois terminais, em um digite **yarn backend** e no outro **yarn dev**, e no navegador acesse a endereço http://localhost:3000.
 
 ## Desenvolvimento do app:
   - Para o desenvolvimento da aplicação foi ultilizado o framework NextJS.
